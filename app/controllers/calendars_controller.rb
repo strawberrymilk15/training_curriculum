@@ -8,13 +8,13 @@ class CalendarsController < ApplicationController
 
   # 予定の保存
   def create
-    Plan.create(plan_params)
+    Plan.create(save_plan)
     redirect_to action: :index
   end
 
   private
 
-  def plan_params
+  def save_plan
     params.require(:calendars).permit(:date, :plan)
   end
 
@@ -34,7 +34,7 @@ class CalendarsController < ApplicationController
       plans.each do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      days = { :month => (@todays_date + x).month, :date => (@todays_date+x).day, :plans => today_plans}
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans}
       @week_days.push(days)
     end
 
